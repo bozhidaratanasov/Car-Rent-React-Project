@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {getCars} from "../../../utils/http-utils/car-requests";
+import {deleteCar, getCars} from "../../../utils/http-utils/car-requests";
 import {CarCard} from "../car-card/CarCard";
 
 export function CarsList() {
@@ -11,7 +11,15 @@ export function CarsList() {
         })
     })
 
+    const deleteCarHandler = async (id) => {
+        await deleteCar(id).then(() => {
+            setCars(prevState => {
+                return prevState.filter(car => car.id !== id)
+            })
+        })
+    }
+
     return (
-        cars.map(car => <CarCard car={car}/>)
+        cars.map(car => <CarCard key={car.id} car={car} deleteCar={deleteCarHandler}/>)
     );
 }
