@@ -1,3 +1,14 @@
 {
-  "cars": []
+  "cars": [
+
+  ],
+  "users": [
+    {
+      "name": "Dog",
+      "phone": "089",
+      "email": "dog",
+      "password": "dog",
+      "id": 1
+    }
+  ]
 }

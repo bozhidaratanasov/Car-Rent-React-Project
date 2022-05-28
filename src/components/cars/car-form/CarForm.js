@@ -35,7 +35,6 @@ export function CarForm() {
             [event.target.name]: event.target.value
         }))
 
-        console.log(event)
     }
 
     const onFormSubmit = (event) => {
@@ -68,7 +67,7 @@ export function CarForm() {
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Vehicle Type</Form.Label>
-                    <Form.Select id="typeSelect" placeholder="Vehicle Type" value={car.type} name="type" onChange={onInputChange}>
+                    <Form.Select id="typeSelect" placeholder="Vehicle Type" value={car.type === '' ? vehicleTypes[0] : car.type} name="type" onChange={onInputChange}>
                         {vehicleTypes.map(vehicle => <option value={vehicle}>{vehicle}</option>)}
                     </Form.Select>
                 </Form.Group>
