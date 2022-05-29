@@ -17,6 +17,7 @@ function App() {
                 <Route path="/cars/edit/:id" element={<CarForm/>}></Route>
                 <Route path="/register" element={<UserForm/>}></Route>
                 <Route path="/login" element={<LoginForm/>}></Route>
+                <Route path="/profile" element={<UserForm/>}></Route>
             </Route>
         </Routes>
       </div>

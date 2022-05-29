@@ -1,5 +1,4 @@
 const styles = {
-    backgroundColor: 'red',
     width: '100%',
     position: 'fixed',
     bottom: 0
@@ -7,8 +6,8 @@ const styles = {
 
 export function Footer() {
     return (
-        <div className="footer" style={styles}>
-            Footer!
+        <div className="footer navbar-light bg-light" style={styles}>
+            Car-Rental 2022 &copy;
         </div>
     );
 }

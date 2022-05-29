@@ -2,7 +2,6 @@ import {Container, Nav, Navbar} from "react-bootstrap";
 import {Link, useNavigate} from "react-router-dom";
 import {getLoggedUser} from "../../utils/http-utils/user-requests";
 import {logout} from "../../utils/http-utils/user-requests";
-import './Header.scss'
 
 export function Header() {
 
@@ -28,6 +27,7 @@ export function Header() {
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="me-auto">
                                 {loggedUser && <Link className="nav-link" to="">Hello, {loggedUser.name}</Link>}
+                                {loggedUser && <Link className="nav-link" to="/profile">Profile</Link>}
                                 {loggedUser && <Link className="nav-link" to="/login" onClick={onLogout}>Logout</Link>}
 
                                 {!loggedUser && <Link className="nav-link" to="/login">Login</Link>}

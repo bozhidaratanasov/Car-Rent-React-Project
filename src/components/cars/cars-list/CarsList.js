@@ -5,11 +5,11 @@ import {CarCard} from "../car-card/CarCard";
 export function CarsList() {
     const [cars, setCars] = useState([])
 
-    useEffect(() => {
-        getCars().then(response => {
+    useEffect( () => {
+         getCars().then(response => {
             setCars(response.data)
         })
-    })
+    }, [])
 
     const deleteCarHandler = async (id) => {
         await deleteCar(id).then(() => {
