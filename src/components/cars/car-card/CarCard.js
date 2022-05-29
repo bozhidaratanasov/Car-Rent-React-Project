@@ -1,7 +1,18 @@
 import {Button, Card} from "react-bootstrap";
 import './CarCard.scss'
+import {useNavigate} from "react-router-dom";
 
 export function CarCard({car, deleteCar}) {
+    const navigate = useNavigate();
+
+    const redirectToRent = () => {
+        navigate(`/cars/rent/${car.id}`);
+    }
+
+    const redirectToEdit = () => {
+        navigate(`/cars/edit/${car.id}`);
+    }
+
     return (
       <div className="car-card-wrapper">
           <Card style={{width: '18rem'}}>
@@ -37,8 +48,8 @@ export function CarCard({car, deleteCar}) {
                       <span>{car.count}</span>
                   </Card.Text>
                   <div className='btn-wrapper'>
-                    <Button variant="info">Rent</Button>
-                    <Button variant="primary">Edit</Button>
+                    <Button variant="info" onClick={redirectToRent}>Rent</Button>
+                    <Button variant="primary" onClick={redirectToEdit}>Edit</Button>
                     <Button variant="danger" onClick={() => deleteCar(car.id)}>Delete</Button>
                   </div>
               </Card.Body>

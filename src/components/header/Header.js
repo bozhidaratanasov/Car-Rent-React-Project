@@ -28,6 +28,7 @@ export function Header() {
                             <Nav className="me-auto">
                                 {loggedUser && <Link className="nav-link" to="">Hello, {loggedUser.name}</Link>}
                                 {loggedUser && <Link className="nav-link" to="/profile">Profile</Link>}
+                                {loggedUser && <Link className="nav-link" to="/profile/rentals">My Rentals</Link>}
                                 {loggedUser && <Link className="nav-link" to="/login" onClick={onLogout}>Logout</Link>}
 
                                 {!loggedUser && <Link className="nav-link" to="/login">Login</Link>}

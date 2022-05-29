@@ -9,7 +9,7 @@ export async function getUser(id) {
 export async function postUser(user) {
     const existingUsers = (await axios.get(`${apiUrl}?email=${user.email}`)).data;
 
-    if (existingUsers)
+    if (existingUsers.length > 0)
         throw new Error('User with this email already exists.');
 
     return await axios.post(apiUrl, user);

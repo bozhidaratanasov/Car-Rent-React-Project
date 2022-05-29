@@ -10,13 +10,6 @@ export function CarForm() {
 
     const params = useParams();
 
-    useEffect(() => {
-        if (params.id)
-            getCar(params.id).then(response => {
-                setCar(response.data)
-            });
-    }, [params.id]);
-
     const [car, setCar] = useState({
         brand: '',
         model: '',
@@ -28,6 +21,13 @@ export function CarForm() {
         price: 0,
         count: 0
     })
+
+    useEffect(() => {
+        if (params.id)
+            getCar(params.id).then(response => {
+                setCar(response.data)
+            });
+    }, [params.id]);
 
     const onInputChange = (event) => {
         setCar(prevState => ({
@@ -43,9 +43,10 @@ export function CarForm() {
         if (params.id)
             putCar(car).then()
 
-        postCar(car).then(() => {
+        else
+            postCar(car).then(() => {
 
-        })
+            })
     }
 
     return (
@@ -54,20 +55,24 @@ export function CarForm() {
             <Form onSubmit={onFormSubmit}>
                 <Form.Group className="mb-3">
                     <Form.Label>Brand</Form.Label>
-                    <Form.Control type="text" placeholder="Enter Brand" value={car.brand} name="brand" onChange={onInputChange}/>
+                    <Form.Control type="text" placeholder="Enter Brand" value={car.brand} name="brand"
+                                  onChange={onInputChange}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Model</Form.Label>
-                    <Form.Control type="text" placeholder="Enter Model" value={car.model} name="model" onChange={onInputChange}/>
+                    <Form.Control type="text" placeholder="Enter Model" required value={car.model} name="model"
+                                  onChange={onInputChange}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Construction Year</Form.Label>
-                    <Form.Control type="number" placeholder="Enter Construction Year" value={car.year} name="year"
+                    <Form.Control type="number" placeholder="Enter Construction Year" required value={car.year} name="year"
                                   onChange={onInputChange}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Vehicle Type</Form.Label>
-                    <Form.Select id="typeSelect" placeholder="Vehicle Type" value={car.type === '' ? vehicleTypes[0] : car.type} name="type" onChange={onInputChange}>
+                    <Form.Select id="typeSelect" placeholder="Vehicle Type"
+                                 value={car.type === '' ? vehicleTypes[0] : car.type} name="type"
+                                 onChange={onInputChange}>
                         {vehicleTypes.map(vehicle => <option value={vehicle}>{vehicle}</option>)}
                     </Form.Select>
                 </Form.Group>
@@ -84,7 +89,8 @@ export function CarForm() {
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Picture</Form.Label>
-                    <Form.Control type="text" placeholder="Enter Picture Link" value={car.picture} name="picture" onChange={onInputChange}/>
+                    <Form.Control type="text" placeholder="Enter Picture Link" value={car.picture} name="picture"
+                                  onChange={onInputChange}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Price Per Day</Form.Label>

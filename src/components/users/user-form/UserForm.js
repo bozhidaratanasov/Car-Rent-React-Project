@@ -8,13 +8,15 @@ export function UserForm(props) {
     const location = useLocation();
     const navigate = useNavigate()
 
-
     const [user, setUser] = useState({
         name: '',
         phone: '',
         email: '',
         password: ''
     });
+
+    const [error, setError] = useState('');
+
 
     useEffect(() => {
         if (location.pathname === '/profile') {
@@ -34,7 +36,11 @@ export function UserForm(props) {
     const onFormSubmit = (event) => {
         event.preventDefault();
         if (location.pathname === '/register')
-            postUser(user).then()
+            postUser(user).then(() => {
+                navigate('/login')
+            }).catch(error => {
+                setError(error.message)
+            })
         else if (location.pathname === '/profile')
             putUser(user).then()
     }
@@ -48,8 +54,8 @@ export function UserForm(props) {
             confirmButtonText: 'Yes',
             showCancelButton: true,
             cancelButtonText: 'Cancel'
-        }).then(value => {
-            if (value)
+        }).then(({isConfirmed}) => {
+            if (isConfirmed)
                 deleteUser().then(
                     navigate('/login')
                 );
@@ -81,6 +87,7 @@ export function UserForm(props) {
                     <Form.Control type="password" placeholder="Enter Password" value={user.password} name="password"
                                   onChange={onInputChange}/>
                 </Form.Group>
+                {error && <p className="text-danger">{error}</p>}
                 <div className="btn-wrapper">
                     <Button type="submit">{location.pathname === '/register' ? 'Register' : 'Edit'}</Button>
                     {location.pathname === '/profile' && <Button variant="danger" onClick={onUserDelete}>Delete</Button>}
