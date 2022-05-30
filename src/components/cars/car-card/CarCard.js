@@ -1,11 +1,19 @@
 import {Button, Card} from "react-bootstrap";
 import './CarCard.scss'
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
 export function CarCard({car, deleteCar}) {
     const navigate = useNavigate();
 
+    const [error, setError] = useState('');
+
     const redirectToRent = () => {
+        if (car.count <= 0) {
+            setError('Sorry! There are no more available units of this vehicle!');
+            return;
+        }
+
         navigate(`/cars/rent/${car.id}`);
     }
 
@@ -47,6 +55,7 @@ export function CarCard({car, deleteCar}) {
                       <span className="label">Available Count:</span>
                       <span>{car.count}</span>
                   </Card.Text>
+                  {error && <p className="text-danger">{error}</p>}
                   <div className='btn-wrapper'>
                     <Button variant="info" onClick={redirectToRent}>Rent</Button>
                     <Button variant="primary" onClick={redirectToEdit}>Edit</Button>

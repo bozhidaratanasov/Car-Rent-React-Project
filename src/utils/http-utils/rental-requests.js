@@ -13,3 +13,7 @@ export async function getRentals() {
 export async function postRental(rental) {
     return await axios.post(apiUrl, rental);
 }
+
+export async function deleteRental(rentalId) {
+    return await axios.delete(`${apiUrl}/${rentalId}`);
+}

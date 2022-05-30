@@ -1,8 +1,10 @@
 import {useEffect, useState} from "react";
-import {getCar} from "../../../utils/http-utils/car-requests";
-import {Button, Card, Form} from "react-bootstrap";
+import {getCar, putCar} from "../../../utils/http-utils/car-requests";
+import {Button, Card} from "react-bootstrap";
+import Swal from "sweetalert2";
+import {deleteRental} from "../../../utils/http-utils/rental-requests";
 
-export function RentalCard({rental}) {
+export function RentalCard({rental, returnRentalEmitter}) {
     const [car, setCar] = useState({
         brand: '',
         model: '',
@@ -20,7 +22,31 @@ export function RentalCard({rental}) {
             getCar(rental.carId).then(response => {
                 setCar(response.data);
             })
-    }, []);
+    }, [rental.carId]);
+
+    const returnRentalHandler = (rentalId) => {
+        Swal.fire({
+            title: 'Return Car',
+            text: 'Are you sure you want to return this car?',
+            icon: 'warning',
+            confirmButtonText: 'Yes',
+            showCancelButton: true,
+            cancelButtonText: 'Cancel'
+        }).then(async ({isConfirmed}) => {
+            if (isConfirmed) {
+                await deleteRental(rentalId).then();
+                setCar(prevState => ({
+                    ...prevState,
+                    count: prevState.count + 1
+                }));
+                returnRentalEmitter(rentalId);
+            }
+        })
+    };
+
+    useEffect(() => {
+        putCar(car).then()
+    }, [car, car.count])
 
 
     return (
@@ -61,7 +87,7 @@ export function RentalCard({rental}) {
                         <span className="label">Total Price:</span>
                         <span>{rental.totalPrice.toFixed(2)}</span>
                     </Card.Text>
-                    <Button className="btn-danger">Return</Button>
+                    <Button className="btn-danger" onClick={() => returnRentalHandler(rental.id)}>Return</Button>
                 </Card.Body>
             </Card>
         </div>

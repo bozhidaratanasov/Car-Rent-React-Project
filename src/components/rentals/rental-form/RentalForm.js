@@ -1,10 +1,11 @@
 import {Button, Card, Form} from "react-bootstrap";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {getCar} from "../../../utils/http-utils/car-requests";
+import {getCar, putCar} from "../../../utils/http-utils/car-requests";
 import {getLoggedUser} from "../../../utils/http-utils/user-requests";
 import {postRental} from "../../../utils/http-utils/rental-requests";
 import  './RentalForm.scss'
+import Swal from "sweetalert2";
 
 export function RentalForm() {
     const params = useParams();
@@ -13,14 +14,6 @@ export function RentalForm() {
     const [startingDate, setStartingDate] = useState('');
     const [endingDate, setEndingDate] = useState('');
     const [totalPrice, setTotalPrice] = useState(0);
-
-
-    useEffect(() => {
-        if (params.id)
-            getCar(params.id).then(response => {
-                setCar(response.data)
-            });
-    }, [params.id]);
 
     const [car, setCar] = useState({
         brand: '',
@@ -35,12 +28,21 @@ export function RentalForm() {
     });
 
     const [rental, setRental] = useState({
-       carId: 0,
-       userId: 0,
-       startingDate: '',
-       endingDate: '',
-       totalPrice: 0
+        carId: 0,
+        userId: 0,
+        startingDate: '',
+        endingDate: '',
+        totalPrice: 0
     });
+
+
+    useEffect(() => {
+        if (params.id)
+            getCar(params.id).then(response => {
+                setCar(response.data)
+            });
+    }, [params.id]);
+
 
     const onDateChange = (event) => {
 
@@ -83,15 +85,30 @@ export function RentalForm() {
             return;
 
         const rental = {
-            car: car.id,
-            user: getLoggedUser().id,
+            carId: car.id,
+            userId: getLoggedUser().id,
             startingDate,
             endingDate,
             totalPrice
         }
 
-        postRental(rental).then();
+        postRental(rental).then(Swal.fire({
+            title: 'Success',
+            text: `You have successfully rented ${car.brand} ${car.model}!`,
+            icon: 'success',
+            confirmButtonText: 'Nice!',
+        }));
+
+        setCar(prevState => ({
+            ...prevState,
+            count: prevState.count - 1
+        }))
+
     }
+
+    useEffect(() => {
+        putCar(car).then()
+    }, [car.count])
 
     return (
         <div className="rent-form-wrapper">
@@ -130,18 +147,18 @@ export function RentalForm() {
                     <Form onSubmit={onFormSubmit}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Starting Date</Form.Label>
-                            <Form.Control type="date" placeholder="Enter Starting Date" name="startingDate"
+                            <Form.Control type="date" placeholder="Enter Starting Date" required name="startingDate"
                                           onChange={(e) => setStartingDate(e.target.value)}/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Ending Date</Form.Label>
-                            <Form.Control type="date" placeholder="Enter Ending Date" name="endingDate" onChange={onDateChange}/>
+                            <Form.Control type="date" placeholder="Enter Ending Date" required name="endingDate" onChange={onDateChange}/>
                         </Form.Group>
                         {error && <p className="text-danger">{error}</p>}
                         {discount && <p className="text-success">{discount}</p>}
                         <Card.Text>
                             <span className="label">Total Price:</span>
-                            <span>{totalPrice}</span>
+                            <span>{totalPrice.toFixed(2)}</span>
                         </Card.Text>
                         <Button variant="info" type="submit">Rent</Button>
                     </Form>

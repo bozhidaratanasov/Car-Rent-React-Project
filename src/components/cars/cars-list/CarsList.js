@@ -4,6 +4,7 @@ import {CarCard} from "../car-card/CarCard";
 import Swal from "sweetalert2";
 import {useNavigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
+import './CarsList.scss'
 
 export function CarsList() {
     const [cars, setCars] = useState([]);
@@ -41,7 +42,9 @@ export function CarsList() {
     return (
         <div>
             <Button variant="primary" onClick={redirectToCreate}>Add New</Button>
-            {cars.map(car => <CarCard key={car.id} car={car} deleteCar={deleteCarHandler}/>)}
+            <div className="cars-list-wrapper">
+                {cars.map(car => <CarCard key={car.id} car={car} deleteCar={deleteCarHandler}/>)}
+            </div>
         </div>
     );
 }

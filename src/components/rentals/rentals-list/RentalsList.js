@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {getRentals} from "../../../utils/http-utils/rental-requests";
 import {RentalCard} from "../rental-card/RentalCard";
-import {getCar} from "../../../utils/http-utils/car-requests";
+import './RentalsList.scss'
 
 export function RentalsList() {
     const [rentals, setRentals] = useState([]);
@@ -25,11 +25,18 @@ export function RentalsList() {
         })
     }, []);
 
+    const returnRental = (rentalId) => {
+        setRentals(prevState => prevState.filter(rental => rental.id !== rentalId))
+    }
+
 
     return (
-      <div>
-          <h1>Your Rented Vehicles</h1>
-          {rentals.map(rental => <RentalCard rental={rental}></RentalCard>)}
-      </div>
+        <div>
+            <h1>Your Rented Vehicles</h1>
+            <div className="rentals-list-wrapper">
+                {rentals.map(rental => <RentalCard rental={rental} returnRentalEmitter={returnRental}></RentalCard>)}
+            </div>
+        </div>
+
     );
 }
