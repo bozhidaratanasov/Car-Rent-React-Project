@@ -13,16 +13,28 @@
       "id": 1
     },
     {
-      "brand": "",
-      "model": "dog",
-      "year": 0,
-      "type": "",
-      "fuel": "",
-      "seats": 0,
+      "brand": "Mercedes-Benz",
+      "model": "W204",
+      "year": "2009",
+      "type": "Estate",
+      "fuel": "Diesel",
+      "seats": "5",
       "picture": "",
-      "price": 0,
-      "count": -1,
+      "price": "12",
+      "count": "5",
       "id": 2
+    },
+    {
+      "brand": "Toyota",
+      "model": "Rav-4",
+      "year": "2002",
+      "type": "SUV",
+      "fuel": "",
+      "seats": "5",
+      "picture": "",
+      "price": "4",
+      "count": "3",
+      "id": 3
     }
   ],
   "users": [

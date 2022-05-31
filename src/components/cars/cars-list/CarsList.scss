@@ -2,3 +2,17 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.sort-wrapper {
+  display: flex;
+  justify-content: left;
+  label {
+    margin-right: 0;
+  }
+}
+
+form {
+  label {
+    margin-top: 8px;
+  }
+}
