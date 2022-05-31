@@ -5,9 +5,10 @@ import Swal from "sweetalert2";
 import {useNavigate} from "react-router-dom";
 import {Button, Form} from "react-bootstrap";
 import './CarsList.scss'
-import {calculateNewValue} from "@testing-library/user-event/dist/utils";
+import {getLoggedUser} from "../../../utils/http-utils/user-requests";
 
 export function CarsList() {
+    const loggedUser = getLoggedUser();
     const [cars, setCars] = useState([]);
 
     const navigate = useNavigate();
@@ -75,13 +76,13 @@ export function CarsList() {
             <h1>Available Cars</h1>
             <Form className="sort-wrapper">
                 <Form.Label style={{width: '5rem'}}>Sort By</Form.Label>
-                <Form.Select style={{width: '10rem'}} onChange={sortCars}>
+                <Form.Select style={{width: '11rem'}} onChange={sortCars}>
                     <option value="newest">Newest</option>
                     <option value="oldest">Oldest</option>
                     <option value="cheapest">Cheapest</option>
                     <option value="expensive">Most Expensive</option>
                 </Form.Select>
-                <Button variant="primary" onClick={redirectToCreate}>Add New</Button>
+                {loggedUser.role === 'admin' && <Button style={{marginLeft: '2rem'}} variant="primary" onClick={redirectToCreate}>Add New</Button>}
             </Form>
             <div className="cars-list-wrapper">
                 {cars.map(car => <CarCard key={car.id} car={car} deleteCar={deleteCarHandler}/>)}

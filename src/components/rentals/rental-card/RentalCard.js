@@ -32,22 +32,20 @@ export function RentalCard({rental, returnRentalEmitter}) {
             confirmButtonText: 'Yes',
             showCancelButton: true,
             cancelButtonText: 'Cancel'
-        }).then(async ({isConfirmed}) => {
+        }).then( ({isConfirmed}) => {
             if (isConfirmed) {
-                await deleteRental(rentalId).then();
-                setCar(prevState => ({
-                    ...prevState,
-                    count: prevState.count + 1
-                }));
+                deleteRental(rentalId).then();
+
+                const carToPut = {
+                    ...car,
+                    count: car.count + 1
+                }
+                putCar(carToPut).then();
+
                 returnRentalEmitter(rentalId);
             }
         })
     };
-
-    useEffect(() => {
-        putCar(car).then()
-    }, [car, car.count])
-
 
     return (
         <div className="rent-card-wrapper">

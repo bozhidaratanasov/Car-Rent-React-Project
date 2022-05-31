@@ -2,8 +2,10 @@ import {Button, Card} from "react-bootstrap";
 import './CarCard.scss'
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
+import {getLoggedUser} from "../../../utils/http-utils/user-requests";
 
 export function CarCard({car, deleteCar}) {
+    const loggedUser = getLoggedUser();
     const navigate = useNavigate();
 
     const [error, setError] = useState('');
@@ -58,8 +60,8 @@ export function CarCard({car, deleteCar}) {
                   {error && <p className="text-danger">{error}</p>}
                   <div className='btn-wrapper'>
                     <Button variant="info" onClick={redirectToRent}>Rent</Button>
-                    <Button variant="primary" onClick={redirectToEdit}>Edit</Button>
-                    <Button variant="danger" onClick={() => deleteCar(car.id)}>Delete</Button>
+                      {loggedUser.role === 'admin' && <Button variant="primary" onClick={redirectToEdit}>Edit</Button>}
+                      {loggedUser.role === 'admin' && <Button variant="danger" onClick={() => deleteCar(car.id)}>Delete</Button>}
                   </div>
               </Card.Body>
           </Card>

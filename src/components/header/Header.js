@@ -26,7 +26,7 @@ export function Header() {
                     <div>
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="me-auto">
-                                {loggedUser && <Link className="nav-link" to="">Hello, {loggedUser.name}</Link>}
+                                {loggedUser && <span className="nav-link">Hello, {loggedUser.name}</span>}
                                 {loggedUser && <Link className="nav-link" to="/profile">Profile</Link>}
                                 {loggedUser && <Link className="nav-link" to="/profile/rentals">My Rentals</Link>}
                                 {loggedUser && <Link className="nav-link" to="/login" onClick={onLogout}>Logout</Link>}

@@ -1,6 +1,6 @@
 import {Button, Form} from "react-bootstrap";
 import {useContext, useState} from "react";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {login} from "../../../utils/http-utils/user-requests";
 
 export function LoginForm() {
@@ -33,7 +33,6 @@ export function LoginForm() {
     }
 
 
-
     return (
         <div className="user-form-wrapper">
             <h1>Login</h1>
@@ -47,6 +46,7 @@ export function LoginForm() {
                     <Form.Control type="password" placeholder="Enter Password" value={user.password} name="password" onChange={onInputChange}/>
                 </Form.Group>
                 {error && <p className="text-danger">{error}</p>}
+                <Link className="nav-link" to="/register">Don't have an account yet?</Link>
                 <Button type="submit">Login</Button>
             </Form>
         </div>

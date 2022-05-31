@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {Button, Form} from "react-bootstrap";
 import {deleteUser, getLoggedUser, getUser, postUser, putUser} from "../../../utils/http-utils/user-requests";
-import {useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 
 export function UserForm(props) {
@@ -12,7 +12,8 @@ export function UserForm(props) {
         name: '',
         phone: '',
         email: '',
-        password: ''
+        password: '',
+        role: 'user'
     });
 
     const [error, setError] = useState('');
@@ -69,25 +70,26 @@ export function UserForm(props) {
             <Form onSubmit={onFormSubmit}>
                 <Form.Group className="mb-3">
                     <Form.Label>Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter Name" value={user.name} name="name"
+                    <Form.Control type="text" placeholder="Enter Name" required value={user.name} name="name"
                                   onChange={onInputChange}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Phone</Form.Label>
-                    <Form.Control type="text" placeholder="Enter Phone" value={user.phone} name="phone"
+                    <Form.Control type="text" placeholder="Enter Phone" required value={user.phone} name="phone"
                                   onChange={onInputChange}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Email Address</Form.Label>
-                    <Form.Control type="text" placeholder="Enter Email Address" value={user.email} name="email"
+                    <Form.Control type="text" placeholder="Enter Email Address" required value={user.email} name="email"
                                   onChange={onInputChange}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Enter Password" value={user.password} name="password"
+                    <Form.Control type="password" placeholder="Enter Password" required value={user.password} name="password"
                                   onChange={onInputChange}/>
                 </Form.Group>
                 {error && <p className="text-danger">{error}</p>}
+                {location.pathname === '/register' && <Link className="nav-link" to="/login">Already have an account?</Link>}
                 <div className="btn-wrapper">
                     <Button type="submit">{location.pathname === '/register' ? 'Register' : 'Edit'}</Button>
                     {location.pathname === '/profile' && <Button variant="danger" onClick={onUserDelete}>Delete</Button>}
